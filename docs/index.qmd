@@ -1,0 +1,35 @@
+---
+title: "index"
+author: "Marco Prencipe"
+format: html
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+```
+
+# Einleitung
+
+Text Einleitung
+
+## Daten
+
+```{r}
+```
+
+## Analyseziele
+
+Text Analyseziele
+
+# Daten Aufbereitung
+
+```{r}
+
+```
+
+# Daten Visualisierung
+
+```{r}
+
+```
