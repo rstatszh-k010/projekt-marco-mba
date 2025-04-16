@@ -9,9 +9,13 @@ editor: visual
 library(tidyverse)
 ```
 
+```{r}
+read_csv(here::here("daten/raw/Statistik_Abbruchquoten_KTZH.csv"))
+```
+
 # Einleitung
 
-Text Einleitung
+In diesem Projekt werden die Lehrvertragsauflösungen in verschiedenen Berufsbranchen des Kantons Zürich über die letzten 25 Jahre untersucht. Die zugrundeliegenden Daten stammen aus der Datenbank der Schulverwaltungslösung für Berufsschulen des Mittelschul- und Berufsbildungsamtes Kanton Zürich und enthalten Informationen zu Branche, Geschlecht, Generation (basierend auf Geburtsjahr), Vertragslaufzeiten und Auflösungen.
 
 ## Daten
 
@@ -20,7 +24,7 @@ Text Einleitung
 
 ## Analyseziele
 
-Text Analyseziele
+Das Hauptziel der Analyse ist es, herauszufinden, wie sich die Lehrabbrüche im Zeitverlauf je nach Branche, Generation und Geschlecht entwickelt haben. Besonderes Augenmerk liegt dabei auf Unterschieden zwischen den Branchen, auf Trends über die Zeit und auf möglichen Mustern zwischen den Generationen (z.B. Generation Z, Millennials) und Geschlechtern.
 
 # Daten Aufbereitung
 
