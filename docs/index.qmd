@@ -9,10 +9,6 @@ editor: visual
 library(tidyverse)
 ```
 
-```{r}
-read_csv(here::here("daten/raw/Statistik_Abbruchquoten_KTZH.csv"))
-```
-
 # Einleitung
 
 In diesem Projekt werden die Lehrvertragsauflösungen in verschiedenen Berufsbranchen des Kantons Zürich über die letzten 25 Jahre untersucht. Die zugrundeliegenden Daten stammen aus der Datenbank der Schulverwaltungslösung für Berufsschulen des Mittelschul- und Berufsbildungsamtes Kanton Zürich und enthalten Informationen zu Branche, Geschlecht, Generation (basierend auf Geburtsjahr), Vertragslaufzeiten und Auflösungen.
@@ -20,6 +16,7 @@ In diesem Projekt werden die Lehrvertragsauflösungen in verschiedenen Berufsbra
 ## Daten
 
 ```{r}
+daten_orig <- read_csv(here::here("daten/raw/Statistik_Abbruchquoten_KTZH.csv"), na = c("", "NULL"))
 ```
 
 ## Analyseziele
@@ -29,7 +26,26 @@ Das Hauptziel der Analyse ist es, herauszufinden, wie sich die Lehrabbrüche im 
 # Daten Aufbereitung
 
 ```{r}
+# Alle Zeilen mit mindestens einem NA Werte und "Geschlecht unbekannt" entfernen
+daten_clean <- daten_orig |>
+  filter(if_all(everything(), ~ !is.na(.))) |>
+  filter(Geschlecht != "Geschlecht unbekannt")
 
+# Numerische Spalten als numerisch setzen falls read_csv das nicht korrekt erkennt
+numerische_spalten <- c(
+  "Gesamt_Lehrvertraege", 
+  "Anzahl_Aufloesungen",
+  "Aufloesungsquote_Prozent",
+  "Zeitspanne_Jahre",
+  "Aufloesungen_pro_Jahr"
+)
+daten_clean <- daten_clean |>
+  mutate(across(all_of(numerische_spalten), as.numeric))
+
+glimpse(daten_clean)
+
+write_csv(x = daten_clean, 
+          here::here("daten/processed/Statistik_Abbruchquoten_KTZH.csv"))
 ```
 
 # Daten Visualisierung
