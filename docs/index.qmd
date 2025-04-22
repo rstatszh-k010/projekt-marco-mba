@@ -1,5 +1,5 @@
 ---
-title: "index"
+title: ""
 author: "Marco Prencipe"
 format: html
 editor: visual
