@@ -35,4 +35,4 @@ Die verwendeten Daten wurden **vor der Analyse aus Datenschutzgründen sorgfält
 - R (tidyverse, ggplot2, knitr)
 - Quarto für Berichterstellung
 
-**Ein herzliches Dankeschön an @larnsce für die tlle Unterstützung und die Begleitung durch das Projekt!**
+**Ein herzliches Dankeschön an @larnsce für die tolle Unterstützung und die Begleitung durch das Projekt!**
