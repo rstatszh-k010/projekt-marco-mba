@@ -1,24 +1,38 @@
 ---
 title: "Analyse der Lehrvertragsauflösungen im Kanton Zürich"
 author: "Marco Prencipe"
-date: "08.05.2025"
-format: html
-fig-width: 10
-fig-height: 6
-fig-align: "center" 
-fontsize: 12pt
+date: "05.12.2025"
+format: 
+  html:
+    embed-resources: true
+    toc: true
+    toc-title: "Inhaltsverzeichnis"
+    toc-location: left
+    fig-width: 10
+    fig-height: 6
+    fig-align: left
+    fontsize: 12pt
+execute:
+  warning: false
+editor_options: 
+  chunk_output_type: console
+lang: de
 editor: visual
-output-file: "analyse.html"
 ---
 
 ```{r}
 library(tidyverse)
 library(ggplot2)
-library(here)
+library(devtools)
+library(statR)
 library(knitr)
-library(scales)
-library(lubridate)
-library(stringr)
+library(gt)
+```
+
+```{r}
+zhpal$zhwebdataviz
+zhpal$zhblue
+zhpal$zhblue[1]
 ```
 
 # Einleitung
@@ -36,14 +50,14 @@ daten <- read_csv(
 
 ## Analyseziele
 
-Diese Analyse untersucht die Entwicklung der Lehrvertragsauflösungen in verschiedenen Generationen auf Basis der gewichteten Auflösungsquote. Die gewichtete Quote berechnet sich als Anteil der aufgelösten Lehrverträge an allen abgeschlossenen Lehrverträgen pro Generation. Diese Methode entspricht dem Vorgehen der amtlichen Statistik und ermöglicht eine faire, verzerrungsfreie Generationenbewertung.
+Diese kurze Analyse untersucht die Entwicklung der Lehrvertragsauflösungen in verschiedenen Generationen auf Basis der gewichteten Auflösungsquote. Die gewichtete Quote berechnet sich als Anteil der aufgelösten Lehrverträge an allen abgeschlossenen Lehrverträgen pro Generation. Diese Methode entspricht dem Vorgehen der amtlichen Statistik und ermöglicht eine faire, verzerrungsfreie Generationenbewertung.
 
 # Daten Aufbereitung
 
 ```{r}
-daten_clean <- daten %>%
+daten_clean <- daten |>
   filter(Geschlecht != "Geschlecht unbekannt",
-         Generation %in% c("Generation Z (ab 1997)", "Millennials (1981-1996)", "Generation X (1965-1980)")) %>%
+         Generation %in% c("Generation Z (ab 1997)", "Millennials (1981-1996)", "Generation X (1965-1980)")) |>
   mutate(Gesamt_Lehrvertraege = as.numeric(Gesamt_Lehrvertraege),
          Anzahl_Aufloesungen = as.numeric(Anzahl_Aufloesungen))
 ```
@@ -53,14 +67,19 @@ daten_clean <- daten %>%
 Die folgende Abbildung zeigt die mittleren Auflösungsquoten nach Generation und Branche. Die Branchen sind farblich unterschieden. Die rote Linie markiert einen kritischen Schwellenwert von 24%. Die wichtigsten gesellschaftlichen Ereignisse, die das Ausbildungsverhalten beeinflusst haben könnten, werden im anschliessenden Fliesstext eingeordnet.
 
 ```{r}
+#| label: fig-generationsplot
+#| fig-cap: "Gewichtete Auflösungsquote nach Generation"
+#| fig-align: "left"
+
+
 # Gewichtete Auflösungsquote pro Generation berechnen
-generationen_gewichtet <- daten_clean %>%
-  group_by(Generation) %>%
+generationen_gewichtet <- daten_clean |>
+  group_by(Generation) |>
   summarise(
     Gesamt_Aufloesungen = sum(Anzahl_Aufloesungen, na.rm = TRUE),
     Gesamt_Vertraege = sum(Gesamt_Lehrvertraege, na.rm = TRUE),
     Gewichtete_Quote = round(100 * Gesamt_Aufloesungen / Gesamt_Vertraege, 1)
-  ) %>%
+  ) |>
   mutate(
     Generation = factor(
       Generation,
@@ -80,7 +99,7 @@ ggplot(generationen_gewichtet, aes(x = Generation, y = Gewichtete_Quote, fill = 
     x = "Generation",
     y = "Gewichtete Auflösungsquote (%)"
   ) +
-  scale_fill_manual(values = c("#2196F3", "#FFC107", "#4CAF50")) +
+  scale_fill_manual(values = zhpal$zhwebdataviz[5:10]) +
   theme_minimal(base_size = 16) +
   theme(
     axis.text.x = element_text(size = 9),
@@ -89,33 +108,42 @@ ggplot(generationen_gewichtet, aes(x = Generation, y = Gewichtete_Quote, fill = 
     legend.position = "none"
   ) +
   expand_limits(y = max(generationen_gewichtet$Gewichtete_Quote) + 8)+
-  theme_minimal()
+  theme_stat() +
+  theme(axis.text.y = element_blank(),
+          panel.grid.major.y = element_blank())
 ```
 
 ```{r}
-generationen_gewichtet %>%
+#| label: tbl-generationen-auflösungsquote
+#| tbl-cap: "Auflösungsquote nach Generationen"
+
+generationen_gewichtet |>
   rename(
     "Generation" = Generation,
     "Anzahl Lehrverträge" = Gesamt_Vertraege,
     "Anzahl Auflösungen" = Gesamt_Aufloesungen,
     "Gewichtete Auflösungsquote (%)" = Gewichtete_Quote
-  ) %>%
-  kable(caption = "Tabelle 1: Gewichtete Auflösungsquote nach Generation")
+  ) |>
+    gt::gt()
 ```
 
 Um die Unterschiede zwischen den Generationen noch deutlicher zu machen, werden im Folgenden die Branchen hervorgehoben, in denen die **Generation Z** eine höhere gewichtete Auflösungsquote aufweist als die Millennials und Generation X.
 
 ```{r}
+#| label: fig-branchenplot
+#| fig-cap: "Gewichtete Auflösungsquote nach Generation in allen relevanten Branchen"
+#| fig-align: "left"
+#| 
 # Schritt 1: Gewichtete Auflösungsquote pro Branche und Generation berechnen
-branchen_generationen <- daten_clean %>%
-  group_by(Branche, Generation) %>%
+branchen_generationen <- daten_clean |>
+  group_by(Branche, Generation) |>
   summarise(
     Gesamt_Aufloesungen = sum(Anzahl_Aufloesungen, na.rm = TRUE),
     Gesamt_Vertraege = sum(Gesamt_Lehrvertraege, na.rm = TRUE),
     Gewichtete_Quote = round(100 * Gesamt_Aufloesungen / Gesamt_Vertraege, 1),
     .groups = "drop"
-  ) %>%
-  filter(Gesamt_Vertraege > 30) %>%
+  ) |>
+  filter(Gesamt_Vertraege > 30) |>
   mutate(
     Generation = factor(
       Generation,
@@ -124,30 +152,29 @@ branchen_generationen <- daten_clean %>%
   )
 
 # Schritt 2: Nur Branchen mit mindestens zwei Generationen (optional: alle drei)
-branchen_vollstaendig <- branchen_generationen %>%
-  group_by(Branche) %>%
-  filter(n() >= 2) %>%
+branchen_vollstaendig <- branchen_generationen |>
+  group_by(Branche) |>
+  filter(n() >= 2) |>
   ungroup()
 
 # Schritt 3: Branchen, in denen Gen Z die höchste Quote hat
-branchen_z_hoeher <- branchen_vollstaendig %>%
-  group_by(Branche) %>%
-  filter(Gewichtete_Quote[Generation == "Generation Z (ab 1997)"] == max(Gewichtete_Quote)) %>%
-  ungroup() %>%
-  filter(Generation == "Generation Z (ab 1997)") %>%
-  arrange(desc(Gewichtete_Quote)) %>%
-  slice_head(n = 8) %>%
+branchen_z_hoeher <- branchen_vollstaendig |>
+  group_by(Branche) |>
+  filter(Gewichtete_Quote[Generation == "Generation Z (ab 1997)"] == max(Gewichtete_Quote)) |>
+  ungroup() |>
+  filter(Generation == "Generation Z (ab 1997)") |>
+  arrange(desc(Gewichtete_Quote)) |>
+  slice_head(n = 8) |>
   pull(Branche)
 
 # Schritt 4: Jetzt korrekt filtern!
-branchenplot <- branchen_generationen %>%
-  filter(Branche %in% branchen_z_hoeher) %>%
+branchenplot <- branchen_generationen |>
+  filter(Branche %in% branchen_z_hoeher) |>
   mutate(Branche = factor(Branche, levels = rev(branchen_z_hoeher)))
-
 
 # Schritt 5: Plot
 ggplot(branchenplot, aes(x = Gewichtete_Quote, y = Branche, fill = Generation)) +
-  geom_col(position = position_dodge(width = 0.8), width = 0.7, color = "black") +
+  geom_col(position = position_dodge(width = 0.8), width = 0.5, color = "black") +
   geom_text(aes(label = paste0(Gewichtete_Quote, "%")),
             position = position_dodge(width = 0.8),
             hjust = -0.1, size = 3, fontface = "bold") +
@@ -160,22 +187,21 @@ ggplot(branchenplot, aes(x = Gewichtete_Quote, y = Branche, fill = Generation)) 
     y = "Branche",
     fill = "Generation"
   ) +
-  scale_fill_manual(values = c("#2196F3", "#FFC107", "#4CAF50")) +
-  guides(fill = guide_legend(nrow = 2, byrow = TRUE)) +
+  scale_fill_manual(values = zhpal$zhwebdataviz[5:10]) +
+  guides(fill = guide_legend(nrow = 1, byrow = TRUE)) +
   theme_minimal(base_size = 16) +
-  theme(
-    plot.title.position = "plot",
-    plot.title = element_text(hjust = 0, face = "bold"),
-    plot.subtitle = element_text(hjust = 0),
-    axis.text.y = element_text(size = 13),
-    axis.text.x = element_text(size = 13),
-    legend.position = "top",
-    plot.margin = margin(t = 10, r = 0.5, b = 10, l = 0.5)
+    theme(
+      plot.title.position = "plot",
+      plot.title = element_text(hjust = 0, face = "bold"),
+      plot.subtitle = element_text(hjust = 0),
+      plot.margin = margin(t = 10, r = 10, b = 10, l = 30)
   ) +
-  xlim(0, max(branchenplot$Gewichtete_Quote) + 8) 
+  xlim(0, max(branchenplot$Gewichtete_Quote) + 8)+
+   theme_stat() +
+    theme(panel.grid.major.y = element_blank())
 ```
 
-**Ergebnisse:**
+## Ergebnisse
 
 -   **Millennials (1981–1996):** 24,6%
 
@@ -185,11 +211,11 @@ ggplot(branchenplot, aes(x = Gewichtete_Quote, y = Branche, fill = Generation)) 
 
 **Einordnung und wissenschaftliche Diskussion**
 
-Die gewichteten Auflösungsquoten in diesem Datensatz zeigen, dass die Millennials die höchste Quote aufweisen, gefolgt von Generation Z und Generation X. Dies steht im Widerspruch zu den offiziellen Statistiken des Bundesamts für Statistik und aktuellen Forschungsarbeiten, die für die letzten Jahre einen kontinuierlichen Anstieg der Auflösungsquote ausweisen, mit dem Höchststand bei der Generation Z.
+Wie in Abbildung @fig-generationsplot und Tabelle @tbl-generationen-auflösungsquote dargestellt, weisen die Millennials die höchste gewichtete Auflösungsquote auf, gefolgt von Generation Z und Generation X. Dies steht im Widerspruch zu den offiziellen Statistiken des Bundesamts für Statistik und aktuellen Forschungsarbeiten, die für die letzten Jahre einen kontinuierlichen Anstieg der Auflösungsquote ausweisen, mit dem Höchststand bei der Generation Z.
 
 **Branchenspezifische Analyse für Generation Z**
 
-Um die Unterschiede zwischen den Generationen noch deutlicher zu machen, wurden zusätzlich die Branchen hervorgehoben, in denen die Generation Z eine höhere gewichtete Auflösungsquote aufweist als die Millennials und Generation X. Diese Ergebnisse bestätigen, dass die Generation Z insbesondere in kunden- und dienstleistungsorientierten Berufen sowie im handwerklichen Bereich höhere Auflösungsquoten aufweist als Millennials und Generation X. In diesen Branchen überschreitet die Auflösungsquote der Generation Z häufig den BFS-Referenzwert von 24%. Dies steht im Einklang mit aktuellen Studien und amtlichen Statistiken.
+Um die Unterschiede zwischen den Generationen noch deutlicher zu machen, wurden zusätzlich die Branchen hervorgehoben, in denen die Generation Z eine höhere gewichtete Auflösungsquote aufweist als die Millennials und Generation X. Diese Ergebnisse sind in Abbildung @fig-branchenplot dargestellt und bestätigen, dass die Generation Z insbesondere in kunden- und dienstleistungsorientierten Berufen sowie im handwerklichen Bereich höhere Auflösungsquoten aufweist als Millennials und Generation X. In diesen Branchen überschreitet die Auflösungsquote der Generation Z häufig den BFS-Referenzwert von 24%. Dies steht im Einklang mit aktuellen Studien und amtlichen Statistiken.
 
 **Mögliche Ursachen für die Abweichung:**
 
@@ -227,17 +253,17 @@ Um die Unterschiede zwischen den Generationen noch deutlicher zu machen, wurden 
 
 -   **Vergleich mit amtlichen Zahlen:** Die Ergebnisse in diesen Branchen bestätigen die Tendenz der offiziellen Statistiken (BFS, EHB), wonach die Generation Z in vielen Berufsfeldern die höchsten Auflösungsquoten aufweist.
 
-**Fazit**
+# Fazit
 
-Die Analyse zeigt, dass die Auflösungsquoten für die Millennials am höchsten sind, gefolgt von Generation Z und Generation X. Dies steht im Gegensatz zu den offiziellen Statistiken, die einen kontinuierlichen Anstieg der Auflösungsquote bis zur Generation Z belegen. Die Abweichung lässt sich durch laufende Verträge, branchenspezifische Effekte und die Kohortenstruktur erklären. Die branchenspezifische Auswertung bestätigt jedoch, dass die Generation Z in wichtigen Dienstleistungsbranchen bereits heute besonders hohe Auflösungsquoten aufweist. Für eine belastbare Aussage empfiehlt sich, nur abgeschlossene Kohorten zu vergleichen oder die Analyse mit offiziellen Zahlen abzugleichen.
+Diese kurze Analyse zeigt, dass die Auflösungsquoten für die Millennials am höchsten sind, gefolgt von Generation Z und Generation X. Dies steht im Gegensatz zu den offiziellen Statistiken, die einen kontinuierlichen Anstieg der Auflösungsquote bis zur Generation Z belegen. Die Abweichung lässt sich durch laufende Verträge, branchenspezifische Effekte und die Kohortenstruktur erklären. Die branchenspezifische Auswertung bestätigt jedoch, dass die Generation Z in wichtigen Dienstleistungsbranchen bereits heute besonders hohe Auflösungsquoten aufweist. Für eine belastbare Aussage empfiehlt sich, nur abgeschlossene Kohorten zu vergleichen oder die Analyse mit offiziellen Zahlen abzugleichen.
 
-**Quellen:**
+# Quellen
 
 -   BFS: [Lehrvertragsauflösungen](https://www.bfs.admin.ch/bfs/de/home/statistiken/bildung-wissenschaft/uebertritte-verlaeufe-bildungsbereich/sekundarstufe-II/aufloesungen.html)
 
 -   EHB: [Publikationen zum Thema Lehrvertragsauflösung](https://www.ehb.swiss/fokus/lehrvertragsaufloesung/forschung/publikationen)
 
-    SKBF: ["Too shocked to search" – The COVID-19 shutdowns’ impact on the apprenticeship market](https://www.skbf-csre.ch/fileadmin/files/pdf/publikationen/LH_WP_182.pdf)
+-   SKBF: ["Too shocked to search" – The COVID-19 shutdowns’ impact on the apprenticeship market](https://www.skbf-csre.ch/fileadmin/files/pdf/publikationen/LH_WP_182.pdf)
 
 -   Backlinko: [Social Network Usage & Growth Statistics (2025)](https://backlinko.com/social-media-users)
 

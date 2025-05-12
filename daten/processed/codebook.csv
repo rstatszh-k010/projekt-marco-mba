@@ -1,1 +1,13 @@
-﻿variable_name,beschreibung
+variable_name,beschreibung,Datentyp,Wertebereich_Kategorien,Fehlwert_Codierung,Hinweise
+Branche,Name der Ausbildungsbranche,Text,"z.B. Detailhandel, Informatik-Berufe, Berufe im Autogewerbe","Keine oder leere Werte als NA","Branchenbezeichnungen wurden bereinigt (z.B. LPK entfernt, Zahlen in Klammern entfernt)"
+Geschlecht,Geschlecht der Lernenden,Text,"männlich, weiblich, Geschlecht unbekannt","Keine oder leere Werte als NA","'Geschlecht unbekannt' wird in der Analyse ausgeschlossen"
+Generation,Generation der Lernenden basierend auf Geburtsjahr,Text,"Generation Z (ab 1997), Millennials (1981-1996), Generation X (1965-1980)","Keine oder leere Werte als NA","Basierend auf Geburtsjahr, in 4 Generationen eingeteilt"
+Gesamt_Lehrvertraege,Anzahl der Lehrverträge in der Gruppe,Numerisch,">= 0","Keine oder leere Werte als NA","Zählt alle Lehrverträge in der jeweiligen Gruppe"
+Anzahl_Aufloesungen,Anzahl der aufgelösten Lehrverträge in der Gruppe,Numerisch,">= 0","Keine oder leere Werte als NA","Zählt alle Auflösungen in der jeweiligen Gruppe"
+Aufloesungsquote_Prozent,Prozentualer Anteil der aufgelösten Lehrverträge,Numerisch,"0-100","Keine oder leere Werte als NA","Berechnet als (Anzahl_Aufloesungen / Gesamt_Lehrvertraege) * 100"
+Vertragszeitraum,Zeitraum der Vertragslaufzeit (Jahr von – Jahr bis),Text,"z.B. 2015 – 2029","Keine oder leere Werte als NA","Zeitraum der Vertragslaufzeit, z.B. '2015 – 2029'"
+Zeitspanne_Jahre,Dauer des Beobachtungszeitraums in Jahren,Numerisch,">= 0","Keine oder leere Werte als NA","Berechnet als Differenz der Jahre im Beobachtungszeitraum"
+Aufloesungen_pro_Jahr,Anzahl der Auflösungen pro Jahr,Numerisch,">= 0","Keine oder leere Werte als NA","Durchschnittliche Anzahl Auflösungen pro Jahr"
+Hochgerechnet_22_Jahre,Hochrechnung der Auflösungen über 22 Jahre (prozentual),Text,"0-100% oder Texthinweise wie 'Zu wenige Daten'","Keine oder leere Werte als NA","Lineare Hochrechnung der Auflösungen über 22 Jahre, begrenzt auf 100%"
+Datenqualitaet,Qualitätsindikator der Daten (Hoch, Mittel, Niedrig),Text,"Hoch, Mittel, Niedrig","Keine oder leere Werte als NA","Datenqualität basierend auf Anzahl Verträge und Beobachtungszeitraum"
+
