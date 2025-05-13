@@ -217,11 +217,15 @@ statR::flush_left(plot_branchen)
 
 Wie in Abbildung @fig-generationsplot und Tabelle @tbl-generationen-auflösungsquote dargestellt, weisen die Millennials die höchste gewichtete Auflösungsquote auf, gefolgt von Generation Z und Generation X. Dies steht im Widerspruch zu den offiziellen Statistiken des Bundesamts für Statistik und aktuellen Forschungsarbeiten, die für die letzten Jahre einen kontinuierlichen Anstieg der Auflösungsquote ausweisen, mit dem Höchststand bei der Generation Z.
 
+Ein möglicher Grund für diesen Widerspruch ist, dass die BFS-Daten gesamtschweizerisch erhoben werden, während die vorliegende Analyse ausschliesslich auf Daten aus dem Kanton Zürich basiert. Wie aktuelle Studien zeigen, gibt es zwischen den Kantonen und Regionen erhebliche Unterschiede in den Auflösungsquoten und deren Entwicklung über die Zeit. So liegen beispielsweise die Quoten im Kanton Zürich traditionell leicht unter dem nationalen Durchschnitt. Zudem können branchenspezifische, wirtschaftliche und demografische Besonderheiten im Kanton Zürich zu abweichenden Mustern führen.
+
 **Branchenspezifische Analyse für Generation Z**
 
 Um die Unterschiede zwischen den Generationen noch deutlicher zu machen, wurden zusätzlich die Branchen hervorgehoben, in denen die Generation Z eine höhere gewichtete Auflösungsquote aufweist als die Millennials und Generation X. Diese Ergebnisse sind in Abbildung @fig-branchenplot dargestellt und bestätigen, dass die Generation Z insbesondere in kunden- und dienstleistungsorientierten Berufen sowie im handwerklichen Bereich höhere Auflösungsquoten aufweist als Millennials und Generation X. In diesen Branchen überschreitet die Auflösungsquote der Generation Z häufig den BFS-Referenzwert von 24%. Dies steht im Einklang mit aktuellen Studien und amtlichen Statistiken.
 
 **Mögliche Ursachen für die Abweichung:**
+
+-   **Regionale vs. nationale Datenbasis:** Die BFS-Statistik bezieht sich auf **gesamtschweizerische Daten**, während diese Analyse ausschliesslich den **Kanton Zürich** betrachtet. Wirtschaftliche, bildungspolitische und demografische Unterschiede zwischen Zürich und anderen Kantonen können zu abweichenden Quoten führen. Beispielsweise weist Zürich einen überdurchschnittlich hohen Anteil an Dienstleistungsbranchen auf, die traditionell höhere Auflösungsquoten haben.
 
 -   **Laufende Verträge und Rechtszensierung:** Viele Lehrverträge der Generation Z sind noch nicht abgeschlossen. Da Vertragsauflösungen meist im ersten oder zweiten Lehrjahr erfolgen, kann die Quote für Generation Z derzeit künstlich niedrig erscheinen (Rechtszensierung). Die amtlichen Statistiken berücksichtigen in der Regel nur abgeschlossene Kohorten, wodurch die tatsächliche Dynamik besser abgebildet wird.
 
@@ -259,7 +263,9 @@ Um die Unterschiede zwischen den Generationen noch deutlicher zu machen, wurden 
 
 # Fazit
 
-Diese kurze Analyse zeigt, dass die Auflösungsquoten für die Millennials am höchsten sind, gefolgt von Generation Z und Generation X. Dies steht im Gegensatz zu den offiziellen Statistiken, die einen kontinuierlichen Anstieg der Auflösungsquote bis zur Generation Z belegen. Die Abweichung lässt sich durch laufende Verträge, branchenspezifische Effekte und die Kohortenstruktur erklären. Die branchenspezifische Auswertung bestätigt jedoch, dass die Generation Z in wichtigen Dienstleistungsbranchen bereits heute besonders hohe Auflösungsquoten aufweist. Für eine belastbare Aussage empfiehlt sich, nur abgeschlossene Kohorten zu vergleichen oder die Analyse mit offiziellen Zahlen abzugleichen.
+Diese Analyse zeigt, dass im Kanton Zürich die gewichteten Auflösungsquoten bei den **Millennials am höchsten** sind, gefolgt von Generation Z und Generation X. Dies steht im Gegensatz zu den gesamtschweizerischen BFS-Statistiken, die einen kontinuierlichen Anstieg der Auflösungsquote bis zur Generation Z belegen. Die Abweichung lässt sich durch die **regionale Datenbasis** (nur Zürich), laufende Verträge, branchenspezifische Effekte und die Kohortenstruktur erklären.
+
+Gleichzeitig bestätigt die branchenspezifische Auswertung, dass die Generation Z in wichtigen Dienstleistungsbranchen bereits heute besonders hohe Auflösungsquoten aufweist, was mit den nationalen Trends übereinstimmt. Für eine belastbare Aussage zur Generation Z empfiehlt sich, **nur abgeschlossene Kohorten** zu vergleichen oder die Analyse mit kantonalen BFS-Daten abzugleichen.
 
 # Quellen
 
@@ -267,8 +273,14 @@ Diese kurze Analyse zeigt, dass die Auflösungsquoten für die Millennials am h�
 
 -   EHB: [Publikationen zum Thema Lehrvertragsauflösung](https://www.ehb.swiss/fokus/lehrvertragsaufloesung/forschung/publikationen)
 
+-   EIT.swiss: [Missverständliche Statistiken zu Lehrvertragsauflösungen (EIT.swiss, 2024)](https://www.eit.swiss/de/verband/stories/missverstaendliche-statistiken-zu-lehrvertragsaufloesungen)
+
 -   SKBF: ["Too shocked to search" – The COVID-19 shutdowns’ impact on the apprenticeship market](https://www.skbf-csre.ch/fileadmin/files/pdf/publikationen/LH_WP_182.pdf)
 
 -   Backlinko: [Social Network Usage & Growth Statistics (2025)](https://backlinko.com/social-media-users)
 
--   https://www.nau.ch/news/schweiz/rekord-mehr-als-jeder-funfte-lost-lehrlingsvertrag-auf-66354497
+-   Medienbereichte Nau.ch: <https://www.nau.ch/news/schweiz/rekord-mehr-als-jeder-funfte-lost-lehrlingsvertrag-auf-66354497>
+
+-   Medienbericht Watson: [Watson, 2023: 62 Prozent der Lehrabbrüche erfolgen bereits im ersten Jahr](https://www.watson.ch/schweiz/leben/644355369-62-prozent-der-lehrabbrueche-erfolgen-bereits-im-ersten-jahr)
+
+-   Kantonale Perspektive (Zug): [zentralplus, 2024: So oft werden in Zug Lehrverträge aufgelöst](https://www.zentralplus.ch/beruf-und-bildung/so-oft-werden-in-zug-lehrvertraege-aufgeloest-2630111/)
