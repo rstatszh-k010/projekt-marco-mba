@@ -30,6 +30,7 @@ library(gt)
 ```
 
 ```{r}
+#| include: false
 zhpal$zhwebdataviz
 zhpal$zhblue
 zhpal$zhblue[1]
@@ -173,7 +174,7 @@ branchenplot <- branchen_generationen |>
   mutate(Branche = factor(Branche, levels = rev(branchen_z_hoeher)))
 
 # Schritt 5: Plot
-ggplot(branchenplot, aes(x = Gewichtete_Quote, y = Branche, fill = Generation)) +
+plot_branchen <- ggplot(branchenplot, aes(x = Gewichtete_Quote, y = Branche, fill = Generation)) +
   geom_col(position = position_dodge(width = 0.8), width = 0.5, color = "black") +
   geom_text(aes(label = paste0(Gewichtete_Quote, "%")),
             position = position_dodge(width = 0.8),
@@ -199,6 +200,9 @@ ggplot(branchenplot, aes(x = Gewichtete_Quote, y = Branche, fill = Generation)) 
   xlim(0, max(branchenplot$Gewichtete_Quote) + 8)+
    theme_stat() +
     theme(panel.grid.major.y = element_blank())
+
+
+statR::flush_left(plot_branchen)
 ```
 
 ## Ergebnisse
