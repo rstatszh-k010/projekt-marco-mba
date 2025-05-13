@@ -65,7 +65,7 @@ daten_clean <- daten |>
 
 # Daten Visualisierung
 
-Die folgende Abbildung zeigt die mittleren Auflösungsquoten nach Generation und Branche. Die Branchen sind farblich unterschieden. Die rote Linie markiert einen kritischen Schwellenwert von 24%. Die wichtigsten gesellschaftlichen Ereignisse, die das Ausbildungsverhalten beeinflusst haben könnten, werden im anschliessenden Fliesstext eingeordnet.
+Die folgende Abbildung zeigt die **gewichteten Auflösungsquoten nach Generation** für den Zeitraum der letzten 25 Jahre im Kanton Zürich. Die Generationen sind farblich unterschieden. Die rote gestrichelte Linie markiert mit 24 % den kritischen Schwellenwert, wie er vom Bundesamt für Statistik (BFS) als Referenzwert für Lehrvertragsauflösungen angegeben wird. Im anschliessenden Fliesstext werden die wichtigsten gesellschaftlichen Ereignisse eingeordnet, die das Ausbildungsverhalten in diesem Zeitraum beeinflusst haben könnten.
 
 ```{r}
 #| label: fig-generationsplot
