@@ -20,8 +20,9 @@ lang: de
 editor: visual
 ---
 
+```{=html}
 <script defer data-domain="rstatszh-k010.github.io" src="https://plausible.io/js/script.file-downloads.js"></script>
-
+```
 ```{r}
 library(tidyverse)
 library(ggplot2)
@@ -233,7 +234,7 @@ Um die Unterschiede zwischen den Generationen noch deutlicher zu machen, wurden 
 
 -   **Branchenspezifische Struktur:** Der vorliegende Datensatz kann Branchen enthalten, in denen Generation Z über- oder unterrepräsentiert ist. Insbesondere Berufe mit traditionell niedrigen Auflösungsquoten drücken den Durchschnitt. Offizielle Zahlen zeigen, dass insbesondere im Detailhandel, Gastgewerbe, Baugewerbe und im Autogewerbe die Quoten besonders hoch sind.
 
--   **Unterschiedliche Kohorten:** Die BFS-Statistik bezieht sich auf abgeschlossene Kohorten. In deinem Datensatz sind vermutlich auch laufende Kohorten enthalten, was die Vergleichbarkeit einschränkt.
+-   **Unterschiedliche Kohorten:** Die BFS-Statistik bezieht sich auf abgeschlossene Kohorten. In diesem Datensatz sind auch laufende Kohorten enthalten, was die Vergleichbarkeit einschränkt.
 
 **Vergleich mit offiziellen Quellen:**
 
