@@ -210,11 +210,11 @@ statR::flush_left(plot_branchen)
 
 ## Ergebnisse
 
--   **Millennials (1981–1996):** 24,6%
+-   **Millennials (1981–1996):** 24,2%
 
--   **Generation Z (ab 1997):** 22,7%
+-   **Generation Z (ab 1997):** 22,6%
 
--   **Generation X (1965–1980):** 20,0%
+-   **Generation X (1965–1980):** 19,6%
 
 **Einordnung und wissenschaftliche Diskussion**
 
